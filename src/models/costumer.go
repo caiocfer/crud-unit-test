@@ -1,15 +1,20 @@
 package models
 
-type Customer struct {
+type CustomerRequest struct {
 	Id    int
 	Name  string
 	Email string
 }
 
-func CreateCostumer(id int, name string, email string) Customer {
+type ShowCustomerResponse struct {
+	Id    int
+	Name  string
+	Email string
+}
 
-	Customer := Customer{
-		Id:    id,
+func CreateCostumer(name string, email string) CustomerRequest {
+
+	Customer := CustomerRequest{
 		Name:  name,
 		Email: email,
 	}
@@ -18,7 +23,7 @@ func CreateCostumer(id int, name string, email string) Customer {
 
 }
 
-func (Customer *Customer) UpdateCostumer(id int, name, email string) {
+func (Customer *CustomerRequest) UpdateCostumer(id int, name, email string) {
 	if name != "" {
 		Customer.Name = name
 	}

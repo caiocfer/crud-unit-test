@@ -17,8 +17,7 @@ func TestSaveCostumerToDb(t *testing.T) {
 
 	costumerRepo := CreateCostumerRepo(db)
 
-	testCostumer := models.Customer{
-		Id:    0,
+	testCostumer := models.CustomerRequest{
 		Name:  "John",
 		Email: "john@doe.com",
 	}
@@ -61,7 +60,7 @@ func TestGetAllCostumers(t *testing.T) {
 		t.Errorf("Expected no erro, but got: %v", err)
 	}
 
-	expectedCustomers := []models.Customer{
+	expectedCustomers := []models.ShowCustomerResponse{
 		{Id: 1, Name: "John Doe", Email: "john@doe.com"},
 		{Id: 2, Name: "Jane Doe", Email: "jane@doe.com"},
 	}

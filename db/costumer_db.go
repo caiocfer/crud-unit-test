@@ -15,7 +15,7 @@ func CreateCostumerRepo(db *sql.DB) *CostumersRepo {
 	return &CostumersRepo{db}
 }
 
-func (repo *CostumersRepo) SaveCostumerToDb(customer models.Customer) error {
+func (repo *CostumersRepo) SaveCostumerToDb(customer models.CustomerRequest) error {
 	query := `INSERT INTO users (name, email) VALUES (?, ?)`
 	_, err := repo.DB.Exec(query, customer.Name, customer.Email)
 
@@ -29,7 +29,7 @@ func (repo *CostumersRepo) SaveCostumerToDb(customer models.Customer) error {
 
 }
 
-func (repo *CostumersRepo) GetAllCostumers() ([]models.Customer, error) {
+func (repo *CostumersRepo) GetAllCostumers() ([]models.ShowCustomerResponse, error) {
 	query := `SELECT * from users`
 	result, err := repo.DB.Query(query)
 	if err != nil {
@@ -38,10 +38,10 @@ func (repo *CostumersRepo) GetAllCostumers() ([]models.Customer, error) {
 
 	defer result.Close()
 
-	customers := []models.Customer{}
+	customers := []models.ShowCustomerResponse{}
 
 	for result.Next() {
-		var customer models.Customer
+		var customer models.ShowCustomerResponse
 
 		if err = result.Scan(
 			&customer.Id,

@@ -5,20 +5,17 @@ import (
 )
 
 func TestCreateCostumer(t *testing.T) {
-	customer := Customer{
-		Id:    0,
+	customer := CustomerRequest{
 		Name:  "John Doe",
 		Email: "john@doe.com",
 	}
 
 	testCostumer := CreateCostumer(
-		customer.Id,
 		customer.Name,
 		customer.Email,
 	)
 
-	expectedCostumer := Customer{
-		Id:    customer.Id,
+	expectedCostumer := CustomerRequest{
 		Name:  customer.Name,
 		Email: customer.Email,
 	}
