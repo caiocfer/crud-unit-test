@@ -8,4 +8,9 @@ var customerRoute = []Route{
 		Function: controller.GetAllCostumers,
 		Method:   "GET",
 	},
+	{
+		URI:      "/customers/{id}",
+		Function: controller.GetCustomerByID,
+		Method:   "GET",
+	},
 }

@@ -40,3 +40,21 @@ func GetAllCostumers() ([]models.ShowCustomerResponse, error) {
 
 	return customer, err
 }
+
+func GetCustomerByID(id int) (models.ShowCustomerResponse, error) {
+	conn, err := db.ConnectToDatabase()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer conn.Close()
+
+	dbconn := db.CreateCostumerRepo(conn)
+
+	customer, err := dbconn.GetCustomerByID(id)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return customer, err
+}

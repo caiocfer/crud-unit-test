@@ -57,3 +57,30 @@ func (repo *CostumersRepo) GetAllCostumers() ([]models.ShowCustomerResponse, err
 	return customers, err
 
 }
+
+func (repo *CostumersRepo) GetCustomerByID(id int) (models.ShowCustomerResponse, error) {
+
+	query := `SELECT * from users where id = ?`
+
+	result, err := repo.DB.Query(query, id)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer result.Close()
+
+	var customer models.ShowCustomerResponse
+	if result.Next() {
+		if err = result.Scan(
+			&customer.Id,
+			&customer.Name,
+			&customer.Email,
+		); err != nil {
+			return models.ShowCustomerResponse{}, err
+		}
+	} else {
+		return models.ShowCustomerResponse{}, sql.ErrNoRows
+
+	}
+	return customer, nil
+
+}
