@@ -23,20 +23,20 @@ func CreateCostumer(name string, email string) {
 
 }
 
-func GetAllCostumers() []models.ShowCustomerResponse {
+func GetAllCostumers() ([]models.ShowCustomerResponse, error) {
 	conn, err := db.ConnectToDatabase()
 	if err != nil {
-		fmt.Println()
+		fmt.Println(err)
 	}
 
 	defer conn.Close()
 
 	dbconn := db.CreateCostumerRepo(conn)
 
-	costumers, err := dbconn.GetAllCostumers()
+	customer, err := dbconn.GetAllCostumers()
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	return costumers
+	return customer, err
 }
