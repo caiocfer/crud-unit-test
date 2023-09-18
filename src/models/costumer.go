@@ -1,15 +1,14 @@
 package models
 
 type CustomerRequest struct {
-	Id    int
 	Name  string
 	Email string
 }
 
 type ShowCustomerResponse struct {
-	Id    int
-	Name  string
-	Email string
+	Id    int    `json:"id"`
+	Name  string `json:"name"`
+	Email string `json:"email"`
 }
 
 func CreateCostumer(name string, email string) CustomerRequest {
