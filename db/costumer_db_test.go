@@ -80,3 +80,39 @@ func TestGetAllCostumers(t *testing.T) {
 	}
 
 }
+
+func TestGetCustomerByID(t *testing.T) {
+	db, mock, err := sqlmock.New()
+	if err != nil {
+		t.Fatalf("Error creating mock DB: %v", err)
+	}
+	defer db.Close()
+
+	costumersRepo := CreateCostumerRepo(db)
+
+	mockQuery := `SELECT \* from users where id = ?`
+
+	row := sqlmock.NewRows([]string{"id", "name", "email"}).
+		AddRow(0, "John", "john@doe.com")
+
+	mock.ExpectQuery(mockQuery).WithArgs(0).WillReturnRows(row)
+
+	expectedCustomer := models.ShowCustomerResponse{
+		Id:    0,
+		Name:  "John",
+		Email: "john@doe.com",
+	}
+	customer, err := costumersRepo.GetCustomerByID(0)
+	if err != nil {
+		t.Errorf("Expected no error, but got an error: %v", err)
+	}
+
+	if expectedCustomer != customer {
+		t.Errorf("Expected customer %+v, but got %+v", expectedCustomer, customer)
+
+	}
+	if err := mock.ExpectationsWereMet(); err != nil {
+		t.Errorf("Unfulfilled expectations: %s", err)
+	}
+
+}
